@@ -1,0 +1,13 @@
+{
+    "name": "my-googlemaps-api",
+    "version": "1.0.0",
+    "description": "Demo exercise utilizing Google Maps API",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/emmyboy/my-googlemaps-api.git"
+    },
+    "dependencies": {
+        "express": "^4.13.0",
+        "request": "^2.58.0"
+    }
+}

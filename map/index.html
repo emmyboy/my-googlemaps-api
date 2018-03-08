@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>News Article Map</title>
+    <meta charset="utf-8">
+    <style>
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      var bigData,
+          xhr = new XMLHttpRequest();
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+          bigData = JSON.parse(xhr.responseText);
+        }
+      };
+      xhr.open('GET', 'http://localhost:8080/api/articles', true);
+      xhr.send(null);
+
+      /*var bigData = [{"publisher":"SunTimes","lat":37.7578152,"lng":-122.4901307,"url":"https://www.google.com","category":"community"},{"publisher":"Mercury","lat":37.7067758,"lng":-122.4188089,"url":"https://www.yahoo.com","category":"community"},{"publisher":"Chronicle","lat":37.7331183,"lng":-122.5051546,"url":"https://www.yelp.com","category":"finance"},{"publisher":"Tribune","lat":37.6213021,"lng":-122.3789406,"url":"https://www.msn.com","category":"sports"}];
+*/
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 37.7578149, lng: -122.5078119},
+          zoom: 12
+        });
+        for (var i=0; i<bigData.length; i++) {
+          var marker = new google.maps.Marker({
+            position: {
+              lat: bigData[i].lat,
+              lng: bigData[i].lng
+            },
+            map: map,
+            provider: bigData[i].publisher, 
+            url: bigData[i].url
+          });
+          marker.addListener('click', function() {
+            window.location.href = this.url;
+          });
+        }
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key= Abxxxxxxxxxxxxxxx00000xxxxxxxxxxxxcD&callback=initMap">
+    </script>
+  </body>
+</html>
